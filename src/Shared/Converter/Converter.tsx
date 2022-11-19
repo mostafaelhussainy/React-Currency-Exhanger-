@@ -29,7 +29,7 @@ function Converter() {
 
   console.log(fromCurrency, toCurrency)
   useEffect(() => {
-    fetch(BASE_URL)
+    // fetch(BASE_URL)
       .then(res => res.json())
       .then(data => {
         const firstCurrency = Object.keys(data.conversion_rates)[43]
@@ -41,7 +41,7 @@ function Converter() {
   },[])
 
   useEffect(() => {
-    fetch(`https://v6.exchangerate-api.com/v6/84d5356a4a47f3ebc2632835/pair/${fromCurrency}/${toCurrency}`)
+    // fetch(`https://v6.exchangerate-api.com/v6/84d5356a4a47f3ebc2632835/pair/${fromCurrency}/${toCurrency}`)
       .then(res => res.json())
       .then(data => {
         setExchangeRate(data.conversion_rate)
