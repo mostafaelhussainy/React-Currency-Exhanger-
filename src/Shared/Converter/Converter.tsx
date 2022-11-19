@@ -12,41 +12,37 @@ import Button from "./Button";
 import './Converter.css'
 
 // D A T A    T Y P E
-
+type ConverterProps = {
+  amount: number
+  exchangeRate: number
+  onChangeAmount: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onChangeFromCurrency: (event: React.ChangeEvent<HTMLSelectElement>) => void
+  onChangeToCurrency: (event: React.ChangeEvent<HTMLSelectElement>) => void
+  handleSwap: () => void
+  isEmpty: boolean
+  currencyOptions: string[]
+  fromCurrency: string
+  toCurrency: string
+} 
 
 // V A R I A B L E S
-const BASE_URL = 'https://v6.exchangerate-api.com/v6/84d5356a4a47f3ebc2632835/latest/USD'
 
-function Converter() {
-  const [currencyOptions, setCurrencyOptions] = useState<string[]>([]);
-  const [fromCurrency, setFromCurrency] = useState<string>()
-  const [toCurrency, setToCurrency] = useState<string>()
-  const [amount, setAmount] = useState<number>()
-  const [exchangeRate, setExchangeRate] = useState<number>()
+function Converter(props: ConverterProps) {
+  const { 
+    amount,
+    exchangeRate,
+    onChangeAmount,
+    onChangeFromCurrency,
+    onChangeToCurrency,
+    isEmpty,
+    currencyOptions,
+    fromCurrency,
+    toCurrency,
+    handleSwap,
+  } = props
+
   const [result, setResult] = useState<number>()
-  const [isEmpty, setIsEmpty] = useState<boolean>(true)
   const [isConverted, setIsConverted] = useState<boolean>(false)
-
-  console.log(fromCurrency, toCurrency)
-  useEffect(() => {
-    // fetch(BASE_URL)
-      .then(res => res.json())
-      .then(data => {
-        const firstCurrency = Object.keys(data.conversion_rates)[43]
-        setCurrencyOptions(Object.keys(data.conversion_rates))
-        setFromCurrency(Object.keys(data.conversion_rates)[43])
-        setToCurrency(Object.keys(data.conversion_rates)[0])
-        setExchangeRate(data.conversion_rates[firstCurrency])
-      })
-  },[])
-
-  useEffect(() => {
-    // fetch(`https://v6.exchangerate-api.com/v6/84d5356a4a47f3ebc2632835/pair/${fromCurrency}/${toCurrency}`)
-      .then(res => res.json())
-      .then(data => {
-        setExchangeRate(data.conversion_rate)
-      })
-  },[fromCurrency, toCurrency] )
 
   function handleConvert() {
     // @ts-ignore
@@ -55,12 +51,6 @@ function Converter() {
     setIsConverted(true)
   }
   
-  function handleSwap() {
-    setFromCurrency(toCurrency)
-    setToCurrency(fromCurrency)
-    handleConvert()
-  }
-
   // I need to empty the result when the amount is zero or empty !!!!!!!!!!!!!
 
   return (
@@ -68,14 +58,7 @@ function Converter() {
       <section className="Converter">
         <Amount 
           amount = {amount}
-          onChangeAmount = {event => {
-            setAmount(parseInt(event.target.value))
-            if (parseInt(event.target.value) > 0 && event.target.value) {
-              setIsEmpty(false)
-            } else {
-              setIsEmpty(true)
-            }
-          }}
+          onChangeAmount = {onChangeAmount}
         />
         <div className="currency-row">
           <div className="from">
@@ -83,7 +66,7 @@ function Converter() {
             <CurrencyDropdown 
               currencyOptions = {currencyOptions}
               selectedCurrency = {fromCurrency}
-              onChangeCurrency = {event => setFromCurrency(event.target.value)}
+              onChangeCurrency = {onChangeFromCurrency}
               isEmpty = {isEmpty}
             />
           </div>
@@ -98,7 +81,7 @@ function Converter() {
             <CurrencyDropdown 
               currencyOptions = {currencyOptions}
               selectedCurrency = {toCurrency}
-              onChangeCurrency = {event => setToCurrency(event.target.value)}
+              onChangeCurrency = {onChangeToCurrency}
               isEmpty = {isEmpty}
             />
           </div>
