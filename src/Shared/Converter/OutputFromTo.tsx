@@ -1,6 +1,8 @@
 function OutputFromTo() {
   return ( 
-    <h1>Output From To</h1>
+    <>
+      <h1>Output From To</h1>
+    </>
    );
 }
 

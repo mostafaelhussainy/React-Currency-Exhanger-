@@ -1,7 +1,14 @@
-function OutputTo() {
+type OutputProps = {
+  result: number
+}
+
+function OutputTo(props: OutputProps) {
+  const { result } = props
   return ( 
     <>
-      <h1>Output To</h1>
+      <div className="output-to">
+      <h1>result: {result}</h1>
+      </div>
     </>
    );
 }

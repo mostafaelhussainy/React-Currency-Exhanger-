@@ -1,0 +1,17 @@
+input {
+  border: 1px solid black;
+  border-radius: 0.25rem;
+  padding: 0.2rem;
+  width: 6em;
+}
+
+.currency-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 40%;
+}
+
+button {
+  height: 2rem;
+}
