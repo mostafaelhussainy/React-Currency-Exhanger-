@@ -14,7 +14,7 @@ import './Converter.css'
 // D A T A    T Y P E
 
 
-// variables
+// V A R I A B L E S
 const BASE_URL = 'https://v6.exchangerate-api.com/v6/84d5356a4a47f3ebc2632835/latest/USD'
 
 function Converter() {
@@ -25,7 +25,9 @@ function Converter() {
   const [exchangeRate, setExchangeRate] = useState<number>()
   const [result, setResult] = useState<number>()
   const [isEmpty, setIsEmpty] = useState<boolean>(true)
+  const [isConverted, setIsConverted] = useState<boolean>(false)
 
+  console.log(fromCurrency, toCurrency)
   useEffect(() => {
     fetch(BASE_URL)
       .then(res => res.json())
@@ -50,8 +52,17 @@ function Converter() {
     // @ts-ignore
     // CHECKKKKKKKKKKKKKKKKKKKKKKKKKKK !!!!!!!!!!!!!!!!
     setResult(amount * exchangeRate)
+    setIsConverted(true)
   }
   
+  function handleSwap() {
+    setFromCurrency(toCurrency)
+    setToCurrency(fromCurrency)
+    handleConvert()
+  }
+
+  // I need to empty the result when the amount is zero or empty !!!!!!!!!!!!!
+
   return (
     <>
       <section className="Converter">
@@ -59,7 +70,6 @@ function Converter() {
           amount = {amount}
           onChangeAmount = {event => {
             setAmount(parseInt(event.target.value))
-            console.log(event.target.value)
             if (parseInt(event.target.value) > 0 && event.target.value) {
               setIsEmpty(false)
             } else {
@@ -77,10 +87,12 @@ function Converter() {
               isEmpty = {isEmpty}
             />
           </div>
-          <Button 
-            onClick={handleConvert} 
-            isEmpty = {isEmpty}
-          />
+          <Button
+            onClick={handleSwap} 
+            isEmpty = {isEmpty} 
+          >
+            Swap
+          </Button>
           <div className="to">
             <h3 className="currency-title">To</h3>
             <CurrencyDropdown 
@@ -91,10 +103,22 @@ function Converter() {
             />
           </div>
         </div>
-        <Button />
-        <OutputFromTo />
+        <Button  
+          onClick={handleConvert} 
+          isEmpty = {isEmpty} 
+        >
+          Convert
+        </Button>
+        <OutputFromTo 
+          toCurrency = {toCurrency}
+          fromCurrency = {fromCurrency}
+          result =  {result}
+          amount = {amount}
+          isConverted = {isConverted}
+        />
         <OutputTo 
           result =  {result}
+          toCurrency = {toCurrency}
         />
         <Button />
       </section>

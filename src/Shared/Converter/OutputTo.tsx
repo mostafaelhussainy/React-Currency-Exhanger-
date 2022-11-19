@@ -1,13 +1,14 @@
 type OutputProps = {
   result: number
+  toCurrency: string
 }
 
 function OutputTo(props: OutputProps) {
-  const { result } = props
+  const { result, toCurrency } = props
   return ( 
     <>
       <div className="output-to">
-      <h1>result: {result}</h1>
+        <h1>result: {result} {toCurrency} </h1>
       </div>
     </>
    );
