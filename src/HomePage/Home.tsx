@@ -112,6 +112,7 @@ function Home() {
       />
       <CardsGrid 
         topCurrencies={topCurrencies}
+        amount={amount}
       />
     </>
   );
