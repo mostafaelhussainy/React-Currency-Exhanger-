@@ -41,12 +41,10 @@ function Converter(props: ConverterProps) {
     handleSwap,
   } = props
 
-  const [result, setResult] = useState<number>()
+  const [result, setResult] = useState<number>(0)
   const [isConverted, setIsConverted] = useState<boolean>(false)
 
   function handleConvert() {
-    // @ts-ignore
-    // CHECKKKKKKKKKKKKKKKKKKKKKKKKKKK !!!!!!!!!!!!!!!!
     setResult(amount * exchangeRate)
     setIsConverted(true)
   }
