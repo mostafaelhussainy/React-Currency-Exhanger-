@@ -1,6 +1,6 @@
 // H O O K S
-import { useEffect, useState } from 'react'
-
+import { useState } from 'react'
+import { Link } from 'react-router-dom';
 // C O M P O N E N T S
 import Amount from "./Amount";
 import CurrencyDropdown from "./CurrencyDropdown";
@@ -19,10 +19,12 @@ type ConverterProps = {
   onChangeFromCurrency: (event: React.ChangeEvent<HTMLSelectElement>) => void
   onChangeToCurrency: (event: React.ChangeEvent<HTMLSelectElement>) => void
   handleSwap: () => void
-  isEmpty: boolean
   currencyOptions: string[]
   fromCurrency: string
   toCurrency: string
+  isDisabled: boolean
+  isHome?: boolean
+  isFromDetails?: boolean
 } 
 
 // V A R I A B L E S
@@ -34,11 +36,13 @@ function Converter(props: ConverterProps) {
     onChangeAmount,
     onChangeFromCurrency,
     onChangeToCurrency,
-    isEmpty,
     currencyOptions,
     fromCurrency,
     toCurrency,
     handleSwap,
+    isDisabled,
+    isHome,
+    isFromDetails
   } = props
 
   const [result, setResult] = useState<number>(0)
@@ -65,12 +69,13 @@ function Converter(props: ConverterProps) {
               currencyOptions = {currencyOptions}
               selectedCurrency = {fromCurrency}
               onChangeCurrency = {onChangeFromCurrency}
-              isEmpty = {isEmpty}
+              isDisabled = {isDisabled}
+              isFromDetails = {isFromDetails}
             />
           </div>
           <Button
             onClick={handleSwap} 
-            isEmpty = {isEmpty} 
+            isDisabled = {isDisabled} 
           >
             Swap
           </Button>
@@ -80,13 +85,13 @@ function Converter(props: ConverterProps) {
               currencyOptions = {currencyOptions}
               selectedCurrency = {toCurrency}
               onChangeCurrency = {onChangeToCurrency}
-              isEmpty = {isEmpty}
+              isDisabled = {isDisabled}
             />
           </div>
         </div>
         <Button  
           onClick={handleConvert} 
-          isEmpty = {isEmpty} 
+          isDisabled = {isDisabled} 
         >
           Convert
         </Button>
@@ -101,7 +106,11 @@ function Converter(props: ConverterProps) {
           result =  {result}
           toCurrency = {toCurrency}
         />
-        <Button />
+        { isHome ? 
+        <Link to={`/details-page/${fromCurrency}/${toCurrency}/${amount}`}>
+          <Button>More Details</Button> 
+        </Link>
+        : <></> }
       </section>
     </>
   );

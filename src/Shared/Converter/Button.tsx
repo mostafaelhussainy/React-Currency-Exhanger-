@@ -1,12 +1,12 @@
 type ButtonProps = {
   onClick?: () => void
-  isEmpty?: boolean
+  isDisabled?: boolean
 } & React.ComponentProps<'button'>
 
 function Button(props: ButtonProps) {
-  const { onClick, isEmpty, children, ...rest } = props
+  const { onClick, isDisabled, children, ...rest } = props
   return ( 
-    <button onClick={onClick} disabled={isEmpty}>{children ? children : 'Button'}</button>
+    <button onClick={onClick} disabled={isDisabled}>{children ? children : 'Button'}</button>
    );
 }
 

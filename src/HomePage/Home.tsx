@@ -3,30 +3,16 @@ import CardsGrid from "./CardsGrid/CardsGrid";
 import { useState, useEffect } from "react";
 
 function Home() {
-
+  const isHome: boolean = true
   // U S E - S T A T E S
   const [currencyOptions, setCurrencyOptions] = useState<string[]>([]);
   const [fromCurrency, setFromCurrency] = useState<string>('EUR')
   const [toCurrency, setToCurrency] = useState<string>('USD')
   const [amount, setAmount] = useState<number>(0)
   const [exchangeRate, setExchangeRate] = useState<number>(0)
-  const [isEmpty, setIsEmpty] = useState<boolean>(true)
-  // ta2rebn malha4 lazma el state ally ta7t de
-  // const [currencyFullOptions, setCurrencyFullOptions] = useState<{}>({})
   const [topCurrencies, setTopCurrencies] = useState<{}>({})
   const filterArray = ['USD', 'EUR', 'JPY', 'GBP', 'AUD', 'CAD', 'CHF', 'EGP', 'HKD']
-  // const [topCurrencies, setTopCurrencies] 
-  //   = useState<{ 
-  //     USD:number
-  //     EUR:number
-  //     JPY:number
-  //     GBP:number
-  //     AUD:number
-  //     CAD:number
-  //     CHF:number
-  //     EGP:number
-  //     HKD:number
-  //   }>({USD:0, EUR:0,JPY:0,GBP:0,AUD:0,CAD:0, CHF:0, EGP:0, HKD:0})
+  const [isDisabled, setIsDisabled] = useState<boolean>(true)
 
   // F U N C T I O N S
 
@@ -43,9 +29,9 @@ function Home() {
   function onChangeAmount (event: React.ChangeEvent<HTMLInputElement>): void {
     setAmount(parseInt(event.target.value))
     if (parseInt(event.target.value) > 0 && event.target.value) {
-      setIsEmpty(false)
+      setIsDisabled(false)
     } else {
-      setIsEmpty(true)
+      setIsDisabled(false)
     }
   }
 
@@ -104,11 +90,12 @@ function Home() {
         onChangeAmount={onChangeAmount}
         onChangeFromCurrency={onChangeFromCurrency}
         onChangeToCurrency={onChangeToCurrency}
-        isEmpty={isEmpty}
+        isDisabled={isDisabled}
         currencyOptions={currencyOptions}
         fromCurrency={fromCurrency}
         toCurrency={toCurrency}
         handleSwap={handleSwap}
+        isHome = {isHome}
       />
       <CardsGrid 
         topCurrencies={topCurrencies}

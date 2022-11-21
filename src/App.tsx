@@ -15,7 +15,7 @@ function App() {
             element={<Home />}
           />
           <Route 
-            path="/details-page"
+            path="/details-page/:from/:to/:am"
             element={<DetailsPage />}
           />
         </Routes>
