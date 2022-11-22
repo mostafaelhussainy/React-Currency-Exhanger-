@@ -20,7 +20,7 @@ function CardsGrid(props: CardsGridProps) {
         {
           filtered.map((currency)=>{
             return (
-              <h1>{currency[0]} : {currency[1] * amount}</h1>
+              <h1 key={currency[0]}>{currency[0]} : {currency[1] * amount}</h1>
             )
           })
         }

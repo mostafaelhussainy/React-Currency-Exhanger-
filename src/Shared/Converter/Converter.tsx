@@ -42,7 +42,7 @@ function Converter(props: ConverterProps) {
     handleSwap,
     isDisabled,
     isHome,
-    isFromDetails
+    isFromDetails,
   } = props
 
   const [result, setResult] = useState<number>(0)

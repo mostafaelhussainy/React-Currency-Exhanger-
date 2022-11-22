@@ -2,6 +2,9 @@ import Converter from "../Shared/Converter/Converter";
 import CardsGrid from "./CardsGrid/CardsGrid";
 import { useState, useEffect } from "react";
 
+// S T Y L I N G
+import './Home.css'
+
 function Home() {
   const isHome: boolean = true
   // U S E - S T A T E S
@@ -46,10 +49,9 @@ function Home() {
   // U S E - E F F E C T S
 
   useEffect(() => {
-    fetch(`https://v6.exchangerate-api.com/v6/84d5356a4a47f3ebc2632835/latest/${fromCurrency}`)
+    fetch(`https://v6.exchangerate-api.com/v6/ff483db4f3522f7aee355415/latest/${fromCurrency}`)
       .then(res => res.json())
       .then(data => {
-        console.log(Object.keys(data.conversion_rates))
         const firstCurrency = Object.keys(data.conversion_rates)[0]
         setCurrencyOptions(Object.keys(data.conversion_rates))
         setFromCurrency(Object.keys(data.conversion_rates)[0])
@@ -64,7 +66,7 @@ function Home() {
   // Change the exchange rate depending on swapping between options
 
   useEffect(() => {
-    fetch(`https://v6.exchangerate-api.com/v6/84d5356a4a47f3ebc2632835/pair/${fromCurrency}/${toCurrency}`)
+    fetch(`https://v6.exchangerate-api.com/v6/ff483db4f3522f7aee355415/pair/${fromCurrency}/${toCurrency}`)
       .then(res => res.json())
       .then(data => {
         setExchangeRate(data.conversion_rate)
@@ -75,7 +77,7 @@ function Home() {
   // Change the top currencies depending on the change of the base currency 
 
   useEffect(()=> {
-    fetch(`https://v6.exchangerate-api.com/v6/84d5356a4a47f3ebc2632835/latest/${fromCurrency}`)
+    fetch(`https://v6.exchangerate-api.com/v6/ff483db4f3522f7aee355415/latest/${fromCurrency}`)
     .then(res => res.json())
     .then(data => {
       filterResults(data.conversion_rates)
