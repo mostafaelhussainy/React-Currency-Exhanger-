@@ -7,6 +7,7 @@ import './Home.css'
 
 function Home() {
   const isHome: boolean = true
+
   // U S E - S T A T E S
   const [currencyOptions, setCurrencyOptions] = useState<string[]>([]);
   const [fromCurrency, setFromCurrency] = useState<string>('EUR')
@@ -16,35 +17,8 @@ function Home() {
   const [topCurrencies, setTopCurrencies] = useState<{}>({})
   const filterArray = ['USD', 'EUR', 'JPY', 'GBP', 'AUD', 'CAD', 'CHF', 'EGP', 'HKD']
   const [isDisabled, setIsDisabled] = useState<boolean>(true)
-
-  // F U N C T I O N S
-
-  function filterResults(currencyFullOptions: {}) {
-    const filtered: [string, unknown][] = (Object.entries(currencyFullOptions)).filter(([key, value]) => filterArray.includes(key));
-    setTopCurrencies(Object.fromEntries(filtered));
-  }
-
-  function handleSwap() {
-    setFromCurrency(toCurrency)
-    setToCurrency(fromCurrency)
-  }
-
-  function onChangeAmount (event: React.ChangeEvent<HTMLInputElement>): void {
-    setAmount(parseInt(event.target.value))
-    if (parseInt(event.target.value) > 0 && event.target.value) {
-      setIsDisabled(false)
-    } else {
-      setIsDisabled(false)
-    }
-  }
-
-  function onChangeFromCurrency (event: React.ChangeEvent<HTMLSelectElement>) {
-    setFromCurrency(event.target.value)
-  }
-
-  function onChangeToCurrency (event: React.ChangeEvent<HTMLSelectElement>) {
-    setToCurrency(event.target.value)
-  }
+  const [result, setResult] = useState<string>('')
+  const [isConverted, setIsConverted] = useState<boolean>(false)
 
   // U S E - E F F E C T S
 
@@ -52,12 +26,11 @@ function Home() {
     fetch(`https://v6.exchangerate-api.com/v6/ff483db4f3522f7aee355415/latest/${fromCurrency}`)
       .then(res => res.json())
       .then(data => {
-        const firstCurrency = Object.keys(data.conversion_rates)[0]
+        const firstCurrency = Object.keys(data.conversion_rates)[146]
         setCurrencyOptions(Object.keys(data.conversion_rates))
         setFromCurrency(Object.keys(data.conversion_rates)[0])
         setToCurrency(Object.keys(data.conversion_rates)[146])
-        setExchangeRate(data.conversion_rates[firstCurrency])
-        // setCurrencyFullOptions(data.conversion_rates)
+        setExchangeRate(1 / data.conversion_rates[firstCurrency])
         filterResults(data.conversion_rates)
       })
   },[])
@@ -72,17 +45,64 @@ function Home() {
         setExchangeRate(data.conversion_rate)
       })
   },[fromCurrency, toCurrency])
+  
+  
+    // Change the top currencies depending on the change of the base currency 
+  
+    useEffect(()=> {
+      fetch(`https://v6.exchangerate-api.com/v6/ff483db4f3522f7aee355415/latest/${fromCurrency}`)
+      .then(res => res.json())
+      .then(data => {
+        filterResults(data.conversion_rates)
+      })
+    },[fromCurrency])
+  
+  // F U N C T I O N S
 
+  function filterResults(currencyFullOptions: {}) {
+    const filtered: [string, unknown][] = (Object.entries(currencyFullOptions)).filter(([key, value]) => filterArray.includes(key));
+    setTopCurrencies(Object.fromEntries(filtered));
+  }
 
-  // Change the top currencies depending on the change of the base currency 
+  function handleSwap() {
+    setFromCurrency(toCurrency)
+    setToCurrency(fromCurrency)
+    setResult((1 / result).toPrecision(4))
+  }
 
-  useEffect(()=> {
-    fetch(`https://v6.exchangerate-api.com/v6/ff483db4f3522f7aee355415/latest/${fromCurrency}`)
-    .then(res => res.json())
-    .then(data => {
-      filterResults(data.conversion_rates)
-    })
-  },[fromCurrency])
+  function onChangeAmount (event: React.ChangeEvent<HTMLInputElement>): void {
+    if (isConverted) {
+      setAmount(parseInt(event.target.value))
+      setResult((parseInt(event.target.value) * exchangeRate).toPrecision(4))
+    } else {
+      setIsConverted(true)
+      if (parseInt(event.target.value) > 0 && event.target.value) {
+        setIsDisabled(false)
+      } else {
+        setIsDisabled(false)
+      }
+    }
+  }
+
+  function handleConvert() {
+    setResult((amount * exchangeRate).toPrecision(4))
+    setIsConverted(true)
+  }
+
+  function onChangeFromCurrency (event: React.ChangeEvent<HTMLSelectElement>) {
+    setFromCurrency(event.target.value)
+    setIsConverted(false)
+    setAmount(0)
+    setResult('')
+  }
+
+  function onChangeToCurrency (event: React.ChangeEvent<HTMLSelectElement>) {
+    setToCurrency(event.target.value)
+    setIsConverted(false)
+    setAmount(0)
+    setResult('')
+  }
+
 
   return (
     <>
@@ -98,6 +118,9 @@ function Home() {
         toCurrency={toCurrency}
         handleSwap={handleSwap}
         isHome = {isHome}
+        handleConvert = {handleConvert}
+        result = {result}
+        isConverted = {isConverted}
       />
       <CardsGrid 
         topCurrencies={topCurrencies}
