@@ -1,1 +1,14 @@
-/*# sourceMappingURL=CardsGrid.css.map */
+.currency-card {
+  background-color: darkgrey;
+  border-radius: 0.3rem;
+  padding: 2rem;
+  align-content: center;
+}
+.currency-card h3 {
+  font-size: 1.2rem;
+  font-weight: 400;
+  text-align: center;
+}
+.currency-card img {
+  margin-left: 1.5rem;
+}/*# sourceMappingURL=CardsGrid.css.map */

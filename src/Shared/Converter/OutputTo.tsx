@@ -1,5 +1,5 @@
 type OutputProps = {
-  result: number
+  result: string
   toCurrency: string
 }
 
