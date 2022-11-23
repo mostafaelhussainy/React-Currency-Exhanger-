@@ -20,14 +20,6 @@ type ChartProps = {
   toCurrency: string
 }
 
-type Data = {
-  labels: string[]
-  datasets: {
-    label: string
-    data: number[]
-  }
-}
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -52,14 +44,14 @@ export const options = {
 };
 
 export function Chart( props:ChartProps ) {
-  const { historicalData, monthsCalender, toCurrency } = props
+  const { toCurrency } = props
 
   const data = {
-    labels: Object.keys(monthsCalender),
+    labels: ['JAN','FAB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV'],
     datasets: [
       {
         label: `${toCurrency} 2022`,
-        data: historicalData,
+        data: [1.02, 1.03, 1.005, 0.98, 0.995, 1.025, 1.032, 1.04, 1.01, 1.007,1.05],
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
@@ -68,7 +60,11 @@ export function Chart( props:ChartProps ) {
   
   return (
     <>
-     <Line options={options} data={data} />
+      <div className="chart-container container mx-auto">
+        <div className="chart mx-auto">
+          <Line options={options} data={data} />
+        </div>
+      </div>
     </>
   );
 }

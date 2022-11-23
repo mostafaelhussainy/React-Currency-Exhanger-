@@ -108,8 +108,10 @@ function Converter(props: ConverterProps) {
             toCurrency = {toCurrency}
           />
           { isHome ? 
-          <Link className="details-btn" to={`/details-page/${fromCurrency}/${toCurrency}/${amount}`}>
-            <Button>More Details</Button> 
+          <Link className="details-btn" to={`/details-page/${fromCurrency}/${toCurrency}/${amount}/${result}`}>
+            <Button
+              isDisabled = {isDisabled} 
+            >More Details</Button> 
           </Link>
           : <></> }
         </div>

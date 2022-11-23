@@ -7,13 +7,14 @@ import { useParams } from "react-router-dom";
 type DetailParams = {
   from: string
   to: string
-  am: number
+  am: string
+  resu: string
 }
 
 function DetailsPage() {
 
   // P A R A M S
-  const { from, to, am } = useParams<DetailParams | any>()
+  const { from, to, am, resu } = useParams<DetailParams>()
 
   // V A R I A B L E S
   const isHome: boolean = false
@@ -21,107 +22,128 @@ function DetailsPage() {
   const monthsCalender: number[] = [31,28,31,30,31,30,31,31,30,31,30]
   
   // U S E - S T A T E S
+  const [historicalData, setHistoricalData] = useState<number[]>([])
   const [currencyOptions, setCurrencyOptions] = useState<string[]>([]);
   const [fromCurrency, setFromCurrency] = useState<string>('EUR')
   const [toCurrency, setToCurrency] = useState<string>('USD')
   const [amount, setAmount] = useState<number>(0)
   const [exchangeRate, setExchangeRate] = useState<number>(0)
   const [isDisabled, setIsDisabled] = useState<boolean>(true)
-  const [historicalData, setHistoricalData] = useState<number[]>([])
+  const [topCurrencies, setTopCurrencies] = useState<{}>({})
+  const [result, setResult] = useState<string>('')
+  const [isConverted, setIsConverted] = useState<boolean>(false)
+  const filterArray = ['USD', 'EUR', 'JPY', 'GBP', 'AUD', 'CAD', 'CHF', 'EGP', 'HKD']
+  
 
-  // F U N C T I O N S
-
-  function handleSwap() {
-    setFromCurrency(toCurrency)
-    setToCurrency(fromCurrency)
-  }
-
-  function onChangeAmount (event: React.ChangeEvent<HTMLInputElement>): void {
-    setAmount(parseInt(event.target.value))
-    if (parseInt(event.target.value) > 0 && event.target.value) {
-      setIsDisabled(false)
-    } else {
-      setIsDisabled(true)
-    }
-  }
-
-  function onChangeFromCurrency (event: React.ChangeEvent<HTMLSelectElement>) {
-    setFromCurrency(event.target.value)
-  }
-
-  function onChangeToCurrency (event: React.ChangeEvent<HTMLSelectElement>) {
-    setToCurrency(event.target.value)
-  }
-
-  function changingChartData() {
-    let rates: number[] = [];
-
-    let myHeaders = new Headers();
-    myHeaders.append("apikey", "A3fg43rIt5HiCQjKqQx8Xxrjmo0jjpku");
-
-    let requestOptions: {} = {
-      method: 'GET',
-      redirect: 'follow',
-      headers: myHeaders
-    };
-
-    fetch("https://api.apilayer.com/fixer/2013-12-24?symbols=USD&base=EUR", requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
-
-    // monthsCalender.map((days:number,index:number)=>{
-    //   })
-    // setHistoricalData(rates)
-  }
   // U S E - E F F E C T S
 
-  // render pre-selected currencies from home page
-
   useEffect(() => {
-    fetch(`https://v6.exchangerate-api.com/v6/ff483db4f3522f7aee355415/latest/${fromCurrency}`)
+    fetch(`https://v6.exchangerate-api.com/v6/582e1a6458049a3cbfd3b2f5/latest/${fromCurrency}`)
       .then(res => res.json())
       .then(data => {
-        const firstCurrency = Object.keys(data.conversion_rates)[0]
+        const firstCurrency = Object.keys(data.conversion_rates)[146]
         setCurrencyOptions(Object.keys(data.conversion_rates))
         setFromCurrency(Object.keys(data.conversion_rates)[0])
         setToCurrency(Object.keys(data.conversion_rates)[146])
         setExchangeRate(data.conversion_rates[firstCurrency])
-        if (from && to && am) {
-          // setAmount(am)
-          setFromCurrency(from)
-          setToCurrency(to)
-        }
+        filterResults(data.conversion_rates)
       })
-      changingChartData()
+      if ( to && from && am && resu) {
+        setToCurrency(to)
+        setFromCurrency(from)
+        setAmount(parseInt(am))
+        setResult(resu)
+      }
   },[])
 
 
+  // Change the exchange rate depending on swapping between options
 
   useEffect(() => {
-    // Change the exchange rate depending on swapping between options
-    fetch(`https://v6.exchangerate-api.com/v6/ff483db4f3522f7aee355415/pair/${fromCurrency}/${toCurrency}`)
+    fetch(`https://v6.exchangerate-api.com/v6/582e1a6458049a3cbfd3b2f5/pair/${fromCurrency}/${toCurrency}`)
       .then(res => res.json())
       .then(data => {
         setExchangeRate(data.conversion_rate)
       })
-  },[toCurrency])
+  },[fromCurrency, toCurrency])
+  
+  
+    // Change the top currencies depending on the change of the base currency 
+  
+    useEffect(()=> {
+      fetch(`https://v6.exchangerate-api.com/v6/582e1a6458049a3cbfd3b2f5/latest/${fromCurrency}`)
+      .then(res => res.json())
+      .then(data => {
+        filterResults(data.conversion_rates)
+      })
+    },[fromCurrency])
+
+
+  // F U N C T I O N S
+
+  function filterResults(currencyFullOptions: {}) {
+    const filtered: [string, unknown][] = (Object.entries(currencyFullOptions)).filter(([key, value]) => filterArray.includes(key));
+    setTopCurrencies(Object.fromEntries(filtered));
+  }
+
+  function handleSwap() {
+    setFromCurrency(toCurrency)
+    setToCurrency(fromCurrency)
+    setResult('')
+  }
+
+  function onChangeAmount (event: React.ChangeEvent<HTMLInputElement>): void {
+    if (isConverted) {
+      setAmount(parseInt(event.target.value))
+      setResult((parseInt(event.target.value) * exchangeRate).toPrecision(4))
+    } else {
+      setIsConverted(true)
+      if (parseInt(event.target.value) > 0 && event.target.value) {
+        setIsDisabled(false)
+      } else if (0 >= parseInt(event.target.value)){
+        setIsDisabled(true)
+      }
+    }
+  }
+
+  function handleConvert() {
+    setResult((amount * exchangeRate).toPrecision(4))
+    setIsConverted(true)
+  }
+
+  function onChangeFromCurrency (event: React.ChangeEvent<HTMLSelectElement>) {
+    setFromCurrency(event.target.value)
+    setIsConverted(false)
+    setAmount(0)
+    setResult('')
+  }
+
+  function onChangeToCurrency (event: React.ChangeEvent<HTMLSelectElement>) {
+    setToCurrency(event.target.value)
+    setIsConverted(false)
+    setAmount(0)
+    setResult('')
+  }
+  
   
   return ( 
     <>
       <Converter 
         amount={amount}
-        exchangeRate={exchangeRate}
-        onChangeAmount={onChangeAmount}
-        onChangeFromCurrency={onChangeFromCurrency}
-        onChangeToCurrency={onChangeToCurrency}
-        isDisabled={isDisabled}
-        currencyOptions={currencyOptions}
         fromCurrency={fromCurrency}
         toCurrency={toCurrency}
         handleSwap={handleSwap}
         isHome={isHome}
-        isFromDetails={isFromDetails}
+        handleConvert = {handleConvert}
+        result = {result}
+        isConverted = {isConverted}
+        isFromDetails = {isFromDetails}
+        onChangeFromCurrency = {onChangeFromCurrency}
+        onChangeToCurrency = {onChangeToCurrency}
+        onChangeAmount = {onChangeAmount}
+        exchangeRate = {exchangeRate}
+        currencyOptions = {currencyOptions}
+        isDisabled = {isDisabled}
       />
       <Chart 
         historicalData = {historicalData}
