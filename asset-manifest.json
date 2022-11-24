@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/React-Currency-Exhanger-/static/css/main.02261118.css",
-    "main.js": "/React-Currency-Exhanger-/static/js/main.a4c1a2d9.js",
-    "static/js/787.74a54b05.chunk.js": "/React-Currency-Exhanger-/static/js/787.74a54b05.chunk.js",
-    "index.html": "/React-Currency-Exhanger-/index.html",
-    "main.02261118.css.map": "/React-Currency-Exhanger-/static/css/main.02261118.css.map",
-    "main.a4c1a2d9.js.map": "/React-Currency-Exhanger-/static/js/main.a4c1a2d9.js.map",
-    "787.74a54b05.chunk.js.map": "/React-Currency-Exhanger-/static/js/787.74a54b05.chunk.js.map"
+    "main.css": "/develop/React-Currency-Exhanger-/static/css/main.02261118.css",
+    "main.js": "/develop/React-Currency-Exhanger-/static/js/main.15c4532b.js",
+    "static/js/787.74a54b05.chunk.js": "/develop/React-Currency-Exhanger-/static/js/787.74a54b05.chunk.js",
+    "index.html": "/develop/React-Currency-Exhanger-/index.html",
+    "main.02261118.css.map": "/develop/React-Currency-Exhanger-/static/css/main.02261118.css.map",
+    "main.15c4532b.js.map": "/develop/React-Currency-Exhanger-/static/js/main.15c4532b.js.map",
+    "787.74a54b05.chunk.js.map": "/develop/React-Currency-Exhanger-/static/js/787.74a54b05.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.02261118.css",
-    "static/js/main.a4c1a2d9.js"
+    "static/js/main.15c4532b.js"
   ]
 }
