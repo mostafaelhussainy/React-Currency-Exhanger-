@@ -10,7 +10,7 @@ function App() {
       <main>
         <Routes>
           <Route 
-            path="/"
+            path="/React-Currency-Exhanger-/"
             element={<Home />}
           />
           <Route 

@@ -8,7 +8,7 @@ function NavBar() {
     <>
       <div className="navbar">
         <div className="logo">
-          <Link className="details-btn" to={`/`}>
+          <Link className="details-btn" to={`/React-Currency-Exhanger-/`}>
             <SiConvertio />
           </Link>
         </div>
