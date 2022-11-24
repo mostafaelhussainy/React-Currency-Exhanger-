@@ -53,6 +53,8 @@ function DetailsPage() {
         setFromCurrency(from)
         setAmount(parseInt(am))
         setResult(resu)
+        setIsConverted(true)
+        setIsDisabled(false)
       }
   },[])
 
@@ -65,6 +67,14 @@ function DetailsPage() {
       .then(data => {
         setExchangeRate(data.conversion_rate)
       })
+      if ( to && from && am && resu) {
+        setToCurrency(to)
+        setFromCurrency(from)
+        setAmount(parseInt(am))
+        setResult(resu)
+        setIsConverted(true)
+        setIsDisabled(false)
+      }
   },[fromCurrency, toCurrency])
   
   
@@ -76,6 +86,14 @@ function DetailsPage() {
       .then(data => {
         filterResults(data.conversion_rates)
       })
+      if ( to && from && am && resu) {
+        setToCurrency(to)
+        setFromCurrency(from)
+        setAmount(parseInt(am))
+        setResult(resu)
+        setIsConverted(true)
+        setIsDisabled(false)
+      }
     },[fromCurrency])
 
 

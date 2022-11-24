@@ -8,7 +8,7 @@ function Amount(props: AmountProps) {
   return ( 
     <>
       <div className="ammout">
-        <h1>Amount</h1>
+        <h3>Amount</h3>
          <input type="number" value={amount} onChange={onChangeAmount} min='0'/>
       </div>
     </>

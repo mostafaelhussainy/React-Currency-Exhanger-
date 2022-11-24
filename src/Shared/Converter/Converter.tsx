@@ -54,6 +54,20 @@ function Converter(props: ConverterProps) {
   return (
     <>
       <section className="Converter container">
+        <div className="title grid grid-cols-2">
+        { isHome ? 
+           <h1 className='col-span-2'>Currency Exchanger</h1>
+          : 
+          <>
+            <h3>{fromCurrency}</h3>
+            <Link className="details-btn" to={`/`}>
+            <Button
+              isDisabled = {isDisabled} 
+            >Back to home</Button> 
+          </Link> 
+          </>
+        }
+        </div>
         <div className="converter-container mx-auto grid grid-cols-1 sm:grid-cols-2 justify-items-stretch">
           <div className="amount text-center">
             <Amount 

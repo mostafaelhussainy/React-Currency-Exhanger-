@@ -1,7 +1,26 @@
 .Converter {
-  background-color: darkgrey;
+  background-color: rgba(169, 169, 169, 0.3);
   border-radius: 0.6rem;
   margin: 0 auto 4rem;
+}
+
+.title {
+  text-align: center;
+}
+.title h1 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+.title h3 {
+  font-size: 2.5rem;
+  font-weight: 500;
+}
+.title a > button {
+  margin-top: 1rem;
+}
+
+.converter-container {
+  margin-bottom: 2rem;
 }
 
 .converter-container {
@@ -15,7 +34,7 @@ input {
 }
 
 .amount {
-  margin-bottom: 2rem;
+  margin: 1rem 0 2rem;
 }
 .amount h3 {
   font-size: 1.5rem;
@@ -80,7 +99,7 @@ select, input {
   text-align: center;
   padding: 0.1rem 0.5rem;
 }
-.output-container .output-from-to h1 {
+.output-container .output-from-to h3 {
   font-size: 1.5rem;
   font-weight: 500;
 }
@@ -88,7 +107,7 @@ select, input {
   text-align: center;
   padding: 0.1rem 0.5rem;
 }
-.output-container .output-to h1 {
+.output-container .output-to h3 {
   font-size: 1.2rem;
   font-weight: 400;
 }/*# sourceMappingURL=Converter.css.map */

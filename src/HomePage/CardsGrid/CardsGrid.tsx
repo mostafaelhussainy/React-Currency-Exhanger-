@@ -10,9 +10,7 @@ type CardsGridProps = {
 function CardsGrid(props: CardsGridProps) {
   const { topCurrencies, amount, flags } = props
   const filtered: [string, number][] = (Object.entries(topCurrencies));
-  const countryFlags: string[] = []
-  const countryName: string[] = []
-  const currencyName: string[] = []
+
   return ( 
     <>
       <section className="top-currencies container mx-auto">
@@ -24,11 +22,14 @@ function CardsGrid(props: CardsGridProps) {
                 <>    
                   <div className="currency-card grid grid-cols-2 justify-items-center">
                     <div className="card-text">
+                      {/* @ts-ignore */}
                       <h3>{flags[cur][1]}</h3>
+                      {/* @ts-ignore */}
                       <h3 key={currency[0]}>{flags[cur][2]}</h3>
                       <h3>{currency[1] * amount}</h3>
                     </div>
                     <img
+                    // @ts-ignore
                       src={`https://flagcdn.com/${flags[cur][0]}.svg`}
                       width="100"
                     />

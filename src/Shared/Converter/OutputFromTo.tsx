@@ -11,7 +11,7 @@ function OutputFromTo(props:OutputFromToProps) {
   return ( 
     <>
       <div className="output-from-to col-span-2">
-        {isConverted && <h1>{`${amount} ${fromCurrency} - ${result} ${toCurrency}`}</h1>}
+        {isConverted && <h3>{`${amount} ${fromCurrency} - ${result} ${toCurrency}`}</h3>}
       </div>
     </>
    );

@@ -137,6 +137,7 @@ function Home() {
       <CardsGrid 
         topCurrencies={topCurrencies}
         amount={amount}
+        // @ts-ignore
         flags={flags}
       />
     </>

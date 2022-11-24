@@ -7,8 +7,8 @@ function OutputTo(props: OutputProps) {
   const { result, toCurrency } = props
   return ( 
     <>
-      <div className="output-to">
-        <h1>result: {result} {toCurrency} </h1>
+      <div className="output-to col-span-2 sm:col-span-1">
+        <h3>result: {result} {toCurrency} </h3>
       </div>
     </>
    );

@@ -10,6 +10,7 @@ type DropdownProps = {
 function CurrencyDropdown(props: DropdownProps) {
 
   const { currencyOptions, selectedCurrency, onChangeCurrency, isDisabled, isFromDetails } = props
+
   return ( 
     <>
       <select 
@@ -19,7 +20,7 @@ function CurrencyDropdown(props: DropdownProps) {
       >
         {currencyOptions.map((option => 
         <>
-          <option key={option} value={option}>{option} </option>
+          <option key={option} value={option} selected= {selectedCurrency == option ? true : false}>{option} </option>
         </>
         ))}
       </select>
