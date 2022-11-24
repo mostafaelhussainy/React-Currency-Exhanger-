@@ -122,7 +122,7 @@ function Converter(props: ConverterProps) {
             toCurrency = {toCurrency}
           />
           { isHome ? 
-          <Link className="details-btn" to={`/details-page/${fromCurrency}/${toCurrency}/${amount}/${result}`}>
+          <Link className="details-btn" to={`/React-Currency-Exhanger-/details-page/${fromCurrency}/${toCurrency}/${amount}/${result}`}>
             <Button
               isDisabled = {isDisabled} 
             >More Details</Button> 

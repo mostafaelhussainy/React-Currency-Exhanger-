@@ -14,7 +14,7 @@ function App() {
             element={<Home />}
           />
           <Route 
-            path="/details-page/:from/:to/:am/:resu"
+            path="/React-Currency-Exhanger-/details-page/:from/:to/:am/:resu"
             element={<DetailsPage />}
           />
         </Routes>

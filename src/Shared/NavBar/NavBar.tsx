@@ -13,12 +13,12 @@ function NavBar() {
           </Link>
         </div>
         <div className="nav-links">
-          <Link className="details-btn" to={`/details-page/EUR/USD/0/0`}>
+          <Link className="details-btn" to={`/React-Currency-Exhanger-/details-page/EUR/USD/0/0`}>
             <Button>
               EUR to USD Details
             </Button> 
           </Link>
-          <Link className="details-btn" to={`/details-page/EUR/GBP/0/0`}>
+          <Link className="details-btn" to={`/React-Currency-Exhanger-/details-page/EUR/GBP/0/0`}>
             <Button>
               EUR to GBP Details
             </Button> 
